@@ -3,13 +3,16 @@
 webdir="/u01/webimport/tomcat/"
 host="192.168.39.135"
 
-# 替换MAC地址的MD5加密
-macAddr=`ifconfig | grep -m 1 HWaddr | awk -F" " '{print $5}'`
-oldMd5=`head -1 /u01/webimport/tomcat/webapps/ime-container/WEB-INF/classes/application.yaml | awk -F " " '{print $2}'`
-newMd5=`echo -n $macAddr | md5sum |tr a-z A-Z | cut -d ' ' -f1`
-echo "MAC地址为：$macAddr"
-echo "MD5值为：$newMd5"
-sed -i "s|$oldMd5|$newMd5|g" /u01/webimport/tomcat/webapps/ime-container/WEB-INF/classes/application.yaml
+# 替换License
+oldCompany=`cat /u01/webimport/tomcat/webapps/ime-container/WEB-INF/classes/application.yaml | grep lien.company | awk -F " " '{print $2}'`
+oldContext=`cat /u01/webimport/tomcat/webapps/ime-container/WEB-INF/classes/application.yaml | grep lien.context | awk -F " " '{print $2}'`
+newCompany="wangjun"
+newContext=`java -cp / ActivationCode`
+sed -i "s|$oldCompany|$newCompany|g" /u01/webimport/tomcat/webapps/ime-container/WEB-INF/classes/application.yaml
+sed -i "s|$oldContext|$newContext|g" /u01/webimport/tomcat/webapps/ime-container/WEB-INF/classes/application.yaml
+
+# 删除java的二进制文件
+rm /ActivationCode.class
 
 # 替换数据库连接字符串
 sed -i "s|@127.0.0.1:1521:ora11g|@$host:1521:XE|g" `find /u01/webimport/tomcat/webapps/ -type f `

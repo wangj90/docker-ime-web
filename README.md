@@ -13,6 +13,4 @@ docker构建ime软件的web服务器，针对ime软件的版本：ime_V2.0.1_Spr
 
   2. 映射宿主机的8080端口到容器的8080端口；
 
-  3. 映射宿主机的/home/wangjun/docker_volumes/ime_volumes文件夹到容器的
-
-/u01/webimport文件夹
+  3. 映射宿主机的/home/wangjun/docker_volumes/ime_volumes文件夹到容器的/u01/webimport文件夹
